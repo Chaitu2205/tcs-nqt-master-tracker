@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TCS NQT Master Tracker</title>
+<meta name="description" content="Track your TCS NQT coding roadmap, aptitude, interview prep and mock tests — all in one place.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0A0D14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F9" media="(prefers-color-scheme: light)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NQT Tracker">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ TOP LOADING / BOOT SCREEN ============ -->
+<div id="bootScreen" class="boot-screen" aria-hidden="true">
+  <div class="boot-inner">
+    <div class="boot-logo">TCS<span>·</span>NQT</div>
+    <div class="boot-bar"><div class="boot-bar-fill"></div></div>
+    <div class="boot-text">INITIALIZING TRACKER<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+  </div>
+</div>
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="brand">
+      <div class="brand-mark">TN</div>
+      <div class="brand-text">
+        <span class="brand-title">TCS NQT</span>
+        <span class="brand-sub">Master Tracker</span>
+      </div>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Collapse sidebar">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <nav class="nav" id="mainNav">
+    <button class="nav-item active" data-page="dashboard"><span class="nav-ic">◈</span><span class="nav-label">Dashboard</span><span class="nav-key">1</span></button>
+    <button class="nav-item" data-page="roadmap"><span class="nav-ic">▤</span><span class="nav-label">Coding Roadmap</span><span class="nav-key">2</span></button>
+    <button class="nav-item" data-page="planner"><span class="nav-ic">☀</span><span class="nav-label">Daily Planner</span><span class="nav-key">3</span></button>
+    <button class="nav-item" data-page="pomodoro"><span class="nav-ic">◷</span><span class="nav-label">Pomodoro Timer</span><span class="nav-key">4</span></button>
+    <button class="nav-item" data-page="notes"><span class="nav-ic">✎</span><span class="nav-label">Notes</span><span class="nav-key">5</span></button>
+    <button class="nav-item" data-page="mocks"><span class="nav-ic">▣</span><span class="nav-label">Mock Tests</span><span class="nav-key">6</span></button>
+    <button class="nav-item" data-page="interview"><span class="nav-ic">◉</span><span class="nav-label">Interview Prep</span><span class="nav-key">7</span></button>
+    <button class="nav-item" data-page="aptitude"><span class="nav-ic">Σ</span><span class="nav-label">Aptitude Tracker</span><span class="nav-key">8</span></button>
+    <button class="nav-item" data-page="subjects"><span class="nav-ic">▥</span><span class="nav-label">Core Subjects</span><span class="nav-key">9</span></button>
+    <button class="nav-item" data-page="analytics"><span class="nav-ic">◱</span><span class="nav-label">Analytics</span><span class="nav-key">0</span></button>
+    <button class="nav-item" data-page="achievements"><span class="nav-ic">✦</span><span class="nav-label">Achievements</span></button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="streak-chip" id="sidebarStreak">
+      <span class="streak-flame">🔥</span>
+      <div class="streak-chip-text">
+        <span class="streak-chip-num" id="sidebarStreakNum">0</span>
+        <span class="streak-chip-label">day streak</span>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg id="themeIconMoon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 9.5A6 6 0 016.5 2.5a6 6 0 106.99 6.99z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <span>Theme</span>
+    </button>
+  </div>
+</aside>
+
+<div class="sidebar-scrim" id="sidebarScrim"></div>
+
+<!-- ============ MAIN ============ -->
+<main class="main" id="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar-search">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M13 13L10 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <input type="text" id="globalSearch" placeholder="Search topics, notes, questions… ( / )" autocomplete="off">
+    </div>
+    <div class="topbar-actions">
+      <span class="offline-pill" id="offlinePill" hidden><span class="offline-dot"></span>Offline</span>
+      <button class="btn btn-primary install-btn" id="installBtn" hidden>⇩ Install App</button>
+      <div class="xp-pill" id="topXpPill">
+        <span class="xp-level" id="topLevel">Lv 1</span>
+        <div class="xp-track"><div class="xp-fill" id="topXpFill"></div></div>
+        <span class="xp-num" id="topXpNum">0 XP</span>
+      </div>
+      <button class="icon-btn" id="shortcutsBtn" title="Keyboard shortcuts">⌘</button>
+      <button class="icon-btn" id="exportBtn" title="Export progress">⇩</button>
+      <label class="icon-btn" id="importBtn" title="Import progress">⇧<input type="file" id="importFile" accept="application/json" hidden></label>
+    </div>
+  </header>
+
+  <div class="pages" id="pages">
+
+    <!-- ================= DASHBOARD ================= -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow" id="dateEyebrow">—</p>
+          <h1 class="hero-title">Welcome back, <span id="userNameDisplay">Aspirant</span>.</h1>
+          <p class="quote" id="quoteText">Loading motivation…</p>
+        </div>
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 140 140">
+            <circle class="ring-track" cx="70" cy="70" r="60"/>
+            <circle class="ring-fill" id="dashRing" cx="70" cy="70" r="60"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-pct" id="dashPct">0%</span>
+            <span class="ring-label">complete</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid" id="statGrid"></div>
+
+      <div class="dash-lower">
+        <div class="card panel">
+          <div class="panel-head"><h3>Weekly Statistics</h3><span class="panel-tag">This week</span></div>
+          <canvas id="weeklyChart" height="160"></canvas>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><h3>Monthly Statistics</h3><span class="panel-tag" id="monthTag">This month</span></div>
+          <canvas id="monthlyChart" height="160"></canvas>
+        </div>
+      </div>
+
+      <div class="dash-lower">
+        <div class="card panel">
+          <div class="panel-head"><h3>Roadmap Weeks</h3><span class="panel-tag">10 weeks</span></div>
+          <div class="week-strip" id="weekStrip"></div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><h3>Today's Plan</h3><span class="panel-tag" id="dashPlanTag">0 tasks</span></div>
+          <div id="dashPlanPreview" class="dash-plan-preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ROADMAP ================= -->
+    <section class="page" id="page-roadmap">
+      <div class="page-head simple">
+        <div>
+          <p class="eyebrow">Coding Roadmap</p>
+          <h1 class="hero-title-sm">140 topics across 10 weeks</h1>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="topbar-search local-search">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M13 13L10 10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <input type="text" id="roadmapSearch" placeholder="Filter topics…">
+        </div>
+        <div class="seg" id="statusFilter">
+          <button class="seg-btn active" data-filter="all">All</button>
+          <button class="seg-btn" data-filter="completed">Completed</button>
+          <button class="seg-btn" data-filter="progress">In Progress</button>
+          <button class="seg-btn" data-filter="pending">Pending</button>
+        </div>
+      </div>
+
+      <div id="roadmapWeeks"></div>
+    </section>
+
+    <!-- ================= DAILY PLANNER ================= -->
+    <section class="page" id="page-planner">
+      <div class="page-head simple">
+        <div>
+          <p class="eyebrow">Daily Planner</p>
+          <h1 class="hero-title-sm" id="plannerDateLabel">Today's schedule</h1>
+        </div>
+        <button class="btn btn-ghost" id="clearPlannerBtn">Clear completed</button>
+      </div>
+      <div class="planner-grid">
+        <div class="planner-col" data-slot="morning">
+          <div class="planner-col-head"><span class="planner-ic">🌅</span><h3>Morning</h3></div>
+          <div class="planner-list" id="list-morning"></div>
+          <form class="planner-add" data-slot="morning"><input type="text" placeholder="Add a morning task…" required><button type="submit">+</button></form>
+        </div>
+        <div class="planner-col" data-slot="afternoon">
+          <div class="planner-col-head"><span class="planner-ic">☀️</span><h3>Afternoon</h3></div>
+          <div class="planner-list" id="list-afternoon"></div>
+          <form class="planner-add" data-slot="afternoon"><input type="text" placeholder="Add an afternoon task…" required><button type="submit">+</button></form>
+        </div>
+        <div class="planner-col" data-slot="evening">
+          <div class="planner-col-head"><span class="planner-ic">🌙</span><h3>Evening</h3></div>
+          <div class="planner-list" id="list-evening"></div>
+          <form class="planner-add" data-slot="evening"><input type="text" placeholder="Add an evening task…" required><button type="submit">+</button></form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= POMODORO ================= -->
+    <section class="page" id="page-pomodoro">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Focus Timer</p><h1 class="hero-title-sm">Pomodoro Timer</h1></div>
+      </div>
+      <div class="pomo-wrap">
+        <div class="pomo-timer card">
+          <svg class="pomo-ring" viewBox="0 0 220 220">
+            <circle class="pomo-track" cx="110" cy="110" r="96"/>
+            <circle class="pomo-fill" id="pomoRing" cx="110" cy="110" r="96"/>
+          </svg>
+          <div class="pomo-center">
+            <span class="pomo-time" id="pomoTime">25:00</span>
+            <span class="pomo-mode" id="pomoMode">FOCUS SESSION</span>
+          </div>
+        </div>
+        <div class="pomo-controls">
+          <div class="seg" id="pomoPresets">
+            <button class="seg-btn active" data-mins="25">25 min</button>
+            <button class="seg-btn" data-mins="45">45 min</button>
+            <button class="seg-btn" data-mins="60">60 min</button>
+          </div>
+          <div class="pomo-custom">
+            <input type="number" id="pomoCustomInput" min="1" max="180" placeholder="Custom minutes">
+            <button class="btn btn-ghost" id="pomoCustomBtn">Set</button>
+          </div>
+          <div class="pomo-buttons">
+            <button class="btn btn-primary" id="pomoStart">Start</button>
+            <button class="btn btn-ghost" id="pomoPause" disabled>Pause</button>
+            <button class="btn btn-ghost" id="pomoReset">Reset</button>
+          </div>
+          <div class="pomo-stats">
+            <div><span id="pomoSessionsToday">0</span><label>sessions today</label></div>
+            <div><span id="pomoMinutesToday">0</span><label>minutes focused</label></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NOTES ================= -->
+    <section class="page" id="page-notes">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Knowledge Base</p><h1 class="hero-title-sm">Notes</h1></div>
+        <button class="btn btn-primary" id="addNoteBtn">+ New note</button>
+      </div>
+      <div class="notes-grid" id="notesGrid"></div>
+    </section>
+
+    <!-- ================= MOCK TESTS ================= -->
+    <section class="page" id="page-mocks">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Simulation Log</p><h1 class="hero-title-sm">Mock Test Tracker</h1></div>
+      </div>
+      <div class="mock-grid" id="mockGrid"></div>
+      <div class="card panel">
+        <div class="panel-head"><h3>Score Trend</h3><span class="panel-tag">5 attempts</span></div>
+        <canvas id="mockChart" height="140"></canvas>
+      </div>
+    </section>
+
+    <!-- ================= INTERVIEW PREP ================= -->
+    <section class="page" id="page-interview">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Final Round</p><h1 class="hero-title-sm">Interview Preparation</h1></div>
+      </div>
+      <div class="checklist-cols" id="interviewCols"></div>
+    </section>
+
+    <!-- ================= APTITUDE ================= -->
+    <section class="page" id="page-aptitude">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Non-Technical</p><h1 class="hero-title-sm">Aptitude Tracker</h1></div>
+      </div>
+      <div class="checklist-cols" id="aptitudeCols"></div>
+    </section>
+
+    <!-- ================= CORE SUBJECTS ================= -->
+    <section class="page" id="page-subjects">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Theory</p><h1 class="hero-title-sm">Core Subjects</h1></div>
+      </div>
+      <div class="subject-grid" id="subjectGrid"></div>
+    </section>
+
+    <!-- ================= ANALYTICS ================= -->
+    <section class="page" id="page-analytics">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Insights</p><h1 class="hero-title-sm">Progress Analytics</h1></div>
+      </div>
+      <div class="dash-lower">
+        <div class="card panel"><div class="panel-head"><h3>Weekly Progress</h3></div><canvas id="anaWeekly" height="180"></canvas></div>
+        <div class="card panel"><div class="panel-head"><h3>Monthly Progress</h3></div><canvas id="anaMonthly" height="180"></canvas></div>
+      </div>
+      <div class="dash-lower">
+        <div class="card panel"><div class="panel-head"><h3>Completion by Week</h3></div><canvas id="anaCompletion" height="200"></canvas></div>
+        <div class="card panel"><div class="panel-head"><h3>Time Distribution</h3></div><canvas id="anaTime" height="200"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ================= ACHIEVEMENTS ================= -->
+    <section class="page" id="page-achievements">
+      <div class="page-head simple">
+        <div><p class="eyebrow">Milestones</p><h1 class="hero-title-sm">Achievements</h1></div>
+      </div>
+      <div class="achv-grid" id="achvGrid"></div>
+      <div class="card panel">
+        <div class="panel-head"><h3>Streak System</h3></div>
+        <div class="streak-grid" id="streakGrid"></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<div class="confetti-layer" id="confettiLayer"></div>
+<div class="toast-stack" id="toastStack"></div>
+
+<div class="ios-install-sheet" id="iosInstallSheet" hidden>
+  <div class="ios-install-card">
+    <button class="modal-close" id="iosInstallClose">✕</button>
+    <div class="ios-install-icon"><img src="icons/icon-192.png" alt="" width="44" height="44"></div>
+    <h4>Install TCS NQT Tracker</h4>
+    <p>Add this app to your Home Screen for a full-screen, offline-ready experience.</p>
+    <div class="ios-install-steps">
+      <div><span class="ios-step-ic">􀈂</span> Tap the <strong>Share</strong> button</div>
+      <div><span class="ios-step-ic">➕</span> Choose <strong>Add to Home Screen</strong></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

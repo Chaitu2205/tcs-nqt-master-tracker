@@ -1,0 +1,41 @@
+{
+  "name": "TCS NQT Master Tracker",
+  "short_name": "NQT Tracker",
+  "description": "Track your TCS NQT coding roadmap, aptitude, interview prep and mock tests — all in one place.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#0A0D14",
+  "theme_color": "#0A0D14",
+  "id": "tcs-nqt-master-tracker",
+  "categories": ["productivity", "education"],
+  "icons": [
+    { "src": "icons/favicon-16.png", "sizes": "16x16", "type": "image/png" },
+    { "src": "icons/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Coding Roadmap",
+      "short_name": "Roadmap",
+      "url": "./index.html#roadmap",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Pomodoro Timer",
+      "short_name": "Timer",
+      "url": "./index.html#pomodoro",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Planner",
+      "short_name": "Planner",
+      "url": "./index.html#planner",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

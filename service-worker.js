@@ -5,7 +5,7 @@
    page itself, not in this cache.
    ============================================================ */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `tcs-nqt-tracker-${CACHE_VERSION}`;
 
 const APP_SHELL = [
@@ -14,11 +14,10 @@ const APP_SHELL = [
   './style.css',
   './script.js',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png',
-  './icons/favicon-32.png',
-  './icons/favicon-16.png',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png',
+  './favicon.ico'
 ];
 
 self.addEventListener('install', event => {
@@ -68,3 +67,4 @@ self.addEventListener('fetch', event => {
     );
   }
 });
+
